@@ -1,0 +1,12 @@
+
+<div>
+    <p>User: {{current_users.username}}</p>
+    <p>Name: {{current_users.full_name}}</p>
+    <p>Email: {{current_users.email}}</p>
+    <p>Status: {% if current_users.is_lead %}
+        Lead
+       {% else %}
+        Member
+       {% endif %}</p>
+    <p>Joined on: {{current_users.start_date}}</p>
+</div>

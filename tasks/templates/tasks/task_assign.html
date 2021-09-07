@@ -1,0 +1,33 @@
+<h1>{% if task.team is not null %}Assign Task "{{task}}"" to Task "{{task.team}}"{% else %}
+    Task "{{task}}" not Assigned{% endif %}
+</h1>
+{% if task.team is not null %}
+<h3>Current Teams</h3>
+<ol>
+    {%for teamx in teams %} {% if task.team == teamx %}
+     <li>{{teamx.team_name}}:- {{teamx.description}} 
+        <form method="POST">
+            {% csrf_token%}
+            <input name="taskid" value="{{task.id}}" type="hidden">
+            <input name="teamid" value="{{teamx.id}}" type="hidden">
+            <input name='remove' type="submit" value="Remove">
+        </form>
+     </li>
+    {% endif %} {% endfor %}
+</ol>
+{% endif %}
+{% if task.team is null %}
+<h3>Teams</h3>
+<ol>
+     {%for teamx in teams %}
+        <li>{{teamx.team_name}}:- {{teamx.description}} 
+            <form method="POST">
+                {% csrf_token%}
+                <input name="taskid" value="{{task.id}}" type="hidden">
+                <input name="teamid" value="{{teamx.id}}" type="hidden">
+                <input name='add' type="submit" value="Add">
+            </form>
+        </li>
+    {% endfor %} 
+</ol>
+{% endif %}

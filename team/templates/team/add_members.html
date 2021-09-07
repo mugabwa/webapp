@@ -1,0 +1,42 @@
+<h1>Add Members to Team {{team}}</h1>
+<h3>Current Members</h3>
+<ol>
+    {%for memberx in members %} {% if memberx.team == team %}
+     <li>{{memberx.full_name}}:- {{memberx.email}} 
+        {% if memberx.is_lead %} <strong>Lead</strong>
+        {% endif %}
+        <form method="POST">
+            {% csrf_token%}
+            <input name="teamid" value="{{team.id}}" type="hidden">
+            <input name="personid" value="{{memberx.id}}" type="hidden">
+            <input name='remove' type="submit" value="Remove">
+        </form>
+     </li>
+    {% endif %} {% endfor %}
+</ol>
+<h3>Members</h3>
+<ol>
+    {% for memberx in members %} {% if not memberx.is_lead and memberx.team is null %}
+        <li>{{memberx.full_name}}:- {{memberx.email}} 
+            <form method="POST">
+                {% csrf_token%}
+                <input name="teamid" value="{{team.id}}" type="hidden">
+                <input name="personid" value="{{memberx.id}}" type="hidden">
+                <input name='add' type="submit" value="Add">
+            </form>
+        </li>
+    {% endif %} {% endfor %}
+</ol>
+<h3>Leads</h3>
+<ol>
+    {% for memberx in members %} {% if memberx.is_lead and memberx.team is null %}
+        <li>{{memberx.full_name}}:- {{memberx.email}}, {{memberx.description}}\
+            <form method="POST">
+                {% csrf_token%}
+                <input name="teamid" value="{{team.id}}" type="hidden">
+                <input name="personid" value="{{memberx.id}}" type="hidden">
+                <input name='add' type="submit" value="Add">
+            </form>
+        </li>
+    {% endif %} {% endfor %}
+</ol>
