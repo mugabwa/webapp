@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-## SECRET_KEY = 
+SECRET_KEY = 'django-insecure-b%yxj0z()+_3id_=f64&e%h7*2v#dzz@q!w5)qi^qqi%w5smi$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.NewUser'
 ## Login required configuration
 LOGIN_URL = 'login'
+## Crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,10 +1,10 @@
 {% extends 'users/base.html' %}
 {% block content %}
 {% load crispy_forms_tags %}
-<h1>Create Team</h1>
+<h1>Update {{user.full_name}}</h1>
 <form method="POST">
     {% csrf_token %}
     {{form|crispy}}
-    <input type="submit" value="Create">
+    <input type="submit" value="Update">
 </form>
 {% endblock content %}

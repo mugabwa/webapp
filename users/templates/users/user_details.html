@@ -1,4 +1,5 @@
-
+{% extends 'users/base.html' %}
+{% block content %}
 <div>
     <p>User: {{current_users.username}}</p>
     <p>Name: {{current_users.full_name}}</p>
@@ -9,4 +10,13 @@
         Member
        {% endif %}</p>
     <p>Joined on: {{current_users.start_date}}</p>
+    {% if current_users == request.user and not current_users.is_staff %}
+    <a href="{% url 'update-profile' %}">Edit</a>
+    {% endif %}
+    {% if request.user.is_staff %}
+    <a href="{% url 'update-user' current_users.id %}">Edit</a>
+    <a href="{% url 'register-lead' current_users.id %}">Update Lead Status</a>
+    <a href="{% url 'delete-user' current_users.id %}">Delete User</a>
+    {% endif %}
 </div>
+{% endblock content %}

@@ -1,6 +1,9 @@
+{% extends 'users/base.html' %}
+{% block content %}
 <h1>Delete Confirmation</h1>
 <form method="POST">
     {% csrf_token %}
     <p>Are you sure you want to delete the task! "{{team}}"</p>
     <input value="Delete" type="submit"/>
 </form>
+{% endblock content %}

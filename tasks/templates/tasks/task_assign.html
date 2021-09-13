@@ -1,3 +1,5 @@
+{% extends 'users/base.html' %}
+{% block content %}
 <h1>{% if task.team is not null %}Assign Task "{{task}}"" to Task "{{task.team}}"{% else %}
     Task "{{task}}" not Assigned{% endif %}
 </h1>
@@ -31,3 +33,4 @@
     {% endfor %} 
 </ol>
 {% endif %}
+{% endblock content %}

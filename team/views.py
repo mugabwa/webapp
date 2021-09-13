@@ -1,7 +1,7 @@
 from django.db import transaction
 from django.views.generic.detail import DetailView
 from users.models import NewUser
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
@@ -9,18 +9,21 @@ from .models import Team
 LIST_TEAM = 'team/list_team.html'
 
 # Create your views here.
-class CustomCreateTeam(LoginRequiredMixin, CreateView):
+class CustomCreateTeam(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     template_name = 'team/create_team.html'
     model = Team
     fields = ['team_name','description']
     success_url = reverse_lazy('all-users')
+
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_staff
 
 class ViewTeamList(LoginRequiredMixin, ListView):
     template_name = LIST_TEAM
     model = Team
     context_object_name = 'teams'
 
-class AddTeamMembers(LoginRequiredMixin,DetailView):
+class AddTeamMembers(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     template_name = 'team/add_members.html'
     model = Team
     context_object_name = 'team'
@@ -39,20 +42,29 @@ class AddTeamMembers(LoginRequiredMixin,DetailView):
 
         return super(AddTeamMembers, self).get(request,*args,**kwargs)
 
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_staff
+
 
         
 
-class DeleteTeam(LoginRequiredMixin,DeleteView):
+class DeleteTeam(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Team
     context_object_name = 'team'
     success_url = reverse_lazy(LIST_TEAM)
 
-class UpdateTeam(LoginRequiredMixin,UpdateView):
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_staff
+
+class UpdateTeam(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Team
     context_object_name = 'team'
     template_name = 'team/team_form.html'
     fields = ['team_name','description']
     success_url = reverse_lazy(LIST_TEAM)
+
+    def test_func(self):
+        return self.request.user.is_authenticated and self.request.user.is_staff
 
 
 

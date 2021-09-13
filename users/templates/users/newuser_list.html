@@ -1,12 +1,14 @@
-<h1>Hello {{request.user.full_name}}</h1>
-{% if request.user.is_authenticated %}
- <a href="{% url 'logout' %}">Logout</a>
-{% else %}
- <a href="{% url 'login' %}">Login</a>
- {% endif %}
-<hr>
+{% extends 'users/base.html' %}
+{% block content %}
 <ol>
 {% for userx in current_users %}
-    <li>{{userx.username}}, {{userx.full_name}}, {{userx.is_lead}}</li>
+    <li>{{userx.username}}, {{userx.full_name}}, {% if userx.is_lead %}Lead{% else %}Member{% endif %} 
+        <a href="{% url 'user-detail' userx.id %}">Details</a>
+        {% if request.user.is_staff %}
+        <a href="{% url 'update-user' userx.id %}">Update</a>
+        <a href="{% url 'delete-user' userx.id %}">Delete</a>
+        {% endif %}
+    </li>
 {% endfor %}
 </ol>
+{% endblock content %}

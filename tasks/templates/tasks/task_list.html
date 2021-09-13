@@ -1,13 +1,19 @@
+{% extends 'users/base.html' %}
+{% block content %}
 <h1>Task List</h1>
 <ol>
     {% for taskx in tasks %}
     <li>{{taskx.title}} :- {{taskx.description}} 
+        {% if request.user.is_staff %}
         {% if not taskx.is_complete %}
         <a href="{% url 'task-assign' taskx.id %}">{% if taskx.team is null %}Assign{% else %}Change{% endif %}</a>
         {% endif %}
         <a href="{% url 'task-update' taskx.id %}">Update</a>
         <a href="{% url 'task-delete' taskx.id %}">Delete</a>
+        {% endif %}
         {%if taskx.team is not null%} Assigned to Team {{taskx.team}} {% endif %}
+        
     </li>
     {% endfor %}
 </ol>
+{% endblock content %}

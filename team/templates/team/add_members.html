@@ -1,3 +1,5 @@
+{% extends 'users/base.html' %}
+{% block content %}
 <h1>Add Members to Team {{team}}</h1>
 <h3>Current Members</h3>
 <ol>
@@ -40,3 +42,4 @@
         </li>
     {% endif %} {% endfor %}
 </ol>
+{% endblock content %}
